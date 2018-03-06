@@ -10,11 +10,14 @@ A scenario file (used to build a Scenario structure) begins with a starting bloc
 
 Args are stored as Strings, so it does not matter what you put in them. Anything else in the file will be treated as either a comment or an Instruction. Comments begin with # and an Instruction is a comma-separated value line, such as:<br><br>
 #This is a comment<br>
-start                           <- Delimiter, the text of the delimiter is stored in args[0], anything else is also in args<br>
-nav.goto, waypointName          <- Command, the first item is stored in target, anything after the fullstop in args<br>
-control.set, manual             <- Control State, the key word is "control", anything after the fullstop is stored in args<br>
-stop, 1                         <- Also a Delimiter, the key words for such are "start" and "stop"<br>
-#This is also a comment<br>
+#Delimiter, the text of the delimiter is stored in args[0], anything else is also in args<br>
+start<br>
+#Command, the first item is stored in target, anything after the fullstop in args<br>
+nav.goto, waypointName<br>
+#Control State, the key word is "control", anything after the fullstop is stored in args<br>
+control.set, manual<br>
+#Also a Delimiter, the key words for such are "start" and "stop"<br>
+stop, 1<br>
 
 When writing scenarios, please ensure to use Notepad++ so random unnecessary characters don't show up (like \par at the end of each line if you use WordPad), generally they should be saved as .scenario files, but the API does not check.
 
