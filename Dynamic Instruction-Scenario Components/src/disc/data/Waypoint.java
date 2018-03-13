@@ -97,4 +97,25 @@ public class Waypoint {
 		return pitch;
 	}
 	
+	@Override
+	public String toString() {
+		return name + ": " + x + ", " + y + ", " + z + ", " + heading + ", " + roll + ", " + pitch;
+	}
+	
+	@Override
+	public int hashCode() {
+		String tmp = Integer.toString(new Double(x).hashCode())
+				+	 Integer.toString(new Double(y).hashCode())
+				+	 Integer.toString(new Double(z).hashCode())
+				+	 Integer.toString(new Double(heading).hashCode())
+				+	 Integer.toString(new Double(roll).hashCode())
+				+	 Integer.toString(new Double(pitch).hashCode());
+		return Integer.valueOf(tmp);
+	}
+	
+	@Override
+	public Waypoint clone() {
+		return new Waypoint(this.name, this.x, this.y, this.z, this.heading, this.roll, this.pitch);
+	}
+	
 }
