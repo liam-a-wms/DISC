@@ -18,44 +18,47 @@ public class Waypoint {
 			this.name = arg0.substring(0, o);
 			int i = arg0.indexOf(',');
 			if(i != -1) {
-				x = Double.valueOf(arg0.substring(o + 1, i - 1));
+				x = Double.valueOf(arg0.substring(o + 1, i));
 				o = i;
-				i = arg0.indexOf(o + 1, ',');
+				i = arg0.indexOf(',', o + 1);
 			} else throw new WaypointException("Invalid Waypoint: does not define data.");
 			if(i != -1) {
-				y = Double.valueOf(arg0.substring(o + 1, i - 1));
+				y = Double.valueOf(arg0.substring(o + 1, i));
 				o = i;
-				i = arg0.indexOf(o + 1, ',');
+				i = arg0.indexOf(',', o + 1);
 			} else throw new WaypointException("Invalid Waypoint: does not define the minimum amount of data.");
 			if(i != -1) {
-				z = Double.valueOf(arg0.substring(o + 1, i - 1));
+				z = Double.valueOf(arg0.substring(o + 1, i));
 				o = i;
-				i = arg0.indexOf(o + 1, ',');
+				i = arg0.indexOf(',', o + 1);
 			} else {
-				z = 0;
+				z = Double.valueOf(arg0.substring(o + 1));
 				heading = 0;
 				roll = 0;
 				pitch = 0;
+				o = -1;
 			}
-			if(i != -1) {
-				heading = Double.valueOf(arg0.substring(o + 1, i - 1));
+			if(i != -1 && o != -1) {
+				heading = Double.valueOf(arg0.substring(o + 1, i));
 				o = i;
-				i = arg0.indexOf(o + 1, ',');
-			} else {
-				heading = 0;
+				i = arg0.indexOf(',', o + 1);
+			} else if(o != -1){
+				heading = Double.valueOf(arg0.substring(o + 1));
 				roll = 0;
 				pitch = 0;
+				o = -1;
 			}
-			if(i != -1) {
-				roll = Double.valueOf(arg0.substring(o + 1, i - 1));
+			if(i != -1 && o != -1) {
+				roll = Double.valueOf(arg0.substring(o + 1, i));
 				o = i;
-				i = arg0.indexOf(o + 1, ',');
-			} else {
-				roll = 0;
+				i = arg0.indexOf(',', o + 1);
+			} else if(o != -1){
+				roll = Double.valueOf(arg0.substring(o + 1));
 				pitch = 0;
+				o = -1;
 			}
-			if(i != -1) pitch = Double.valueOf(arg0.substring(i + 1));
-			else pitch = 0;
+			if(i != -1 && o != -1) pitch = Double.valueOf(arg0.substring(i));
+			else if(o != -1) pitch = Double.valueOf(o + 1);
 		} else throw new WaypointException("Invalid Waypoint: does not define name.");
 	}
 	
