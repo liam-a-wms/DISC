@@ -71,6 +71,16 @@ public class Waypoint {
 		this.roll = roll;
 		this.pitch = pitch;
 	}
+	
+	public Waypoint(double x, double y) {
+		this.x = x;
+		this.y = y;
+		this.z = 0;
+		this.heading = 0;
+		this.roll = 0;
+		this.pitch = 0;
+		this.name = Integer.toString(this.hashCode());
+	}
 
 	public String getName() {
 		return name;
