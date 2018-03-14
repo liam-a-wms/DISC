@@ -113,7 +113,7 @@ public class Waypoint {
 				+	 Integer.toString(new Double(heading).hashCode())
 				+	 Integer.toString(new Double(roll).hashCode())
 				+	 Integer.toString(new Double(pitch).hashCode());
-		return Integer.valueOf(tmp);
+		return (int) (Math.pow(Double.valueOf(tmp), .25));
 	}
 	
 	@Override
