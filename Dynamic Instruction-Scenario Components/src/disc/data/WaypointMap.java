@@ -3,6 +3,7 @@ package disc.data;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -62,6 +63,20 @@ public class WaypointMap {
 			x = xLowerBound;
 			y += (1 / (10 ^ decimalPrecision));
 		}
+	}
+	
+	public void addWaypoint(Waypoint toAdd) {
+		m.put(toAdd.getName(), toAdd);
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder("");
+		if(inDegrees) sb.append("#$DEGREES\r\n");
+		else sb.append("#$RADIANS\r\n");
+		Iterator<String> iter = m.keySet().iterator();
+		while(iter.hasNext()) sb.append(m.get(iter.next()).toString() + "\r\n");
+		return sb.toString();
 	}
 	
 }
