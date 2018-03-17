@@ -51,12 +51,16 @@ public class WaypointMap {
 	}
 
 	public void generateDefaultMap(double xLowerBound, double xUpperBound, double yLowerBound, double yUpperBound, int decimalPrecision) {
-		for(double y = yLowerBound; y <= yUpperBound; y += (1 / Math.pow(10, decimalPrecision))) {
-			for(double x = xLowerBound; x <= xUpperBound; x += (1 / Math.pow(10, decimalPrecision))) {
-				Waypoint t = new Waypoint(x, y);
+		for(double y = yLowerBound; y <= yUpperBound; y += round(1 / Math.pow(10, decimalPrecision), decimalPrecision + 1)) {
+			for(double x = xLowerBound; x <= xUpperBound; x += round(1 / Math.pow(10, decimalPrecision), decimalPrecision + 1)) {
+				Waypoint t = new Waypoint(round(x, decimalPrecision), round(y, decimalPrecision));
 				m.put(t.name, t);
 			}
 		}
+	}
+	
+	private double round(double val, int place) {
+		return Math.floor((val * Math.pow(10, place))) / Math.pow(10, place);
 	}
 	
 	public void addWaypoint(Waypoint toAdd) {
