@@ -151,7 +151,7 @@ public class Scenario {
 		toOut += scenarioName.hashCode();
 		for(String s : args) toOut += s.hashCode();
 		for(Instruction i : instructions) toOut += i.hashCode();
-		return Integer.valueOf(toOut);
+		return (int) (Double.valueOf(toOut).doubleValue());
 	}
 	
 	/**

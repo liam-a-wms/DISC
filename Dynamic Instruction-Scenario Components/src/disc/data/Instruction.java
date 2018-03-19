@@ -166,22 +166,24 @@ public class Instruction {
 	 */
 	@Override
 	public int hashCode() {
-		String raw = "";
-		switch(t) {
-		case COMMAND:
-			raw = "1";
-			break;
-		case DELIMITER:
-			raw = "2";
-			break;
-		case CONTROL_STATE:
-			raw = "3";
-			break;
-		}
-		raw += target.hashCode();
-		for(int i = 0; i < args.length; i++) raw += args[i].hashCode();
+		if(t != null) {
+			StringBuilder sb = new StringBuilder("");
+			switch(t) {
+			case COMMAND:
+				sb.append("1");
+				break;
+			case DELIMITER:
+				sb.append("2");
+				break;
+			case CONTROL_STATE:
+				sb.append("3");
+				break;
+			}
+			if(target != null) sb.append(target.hashCode());
+			for(int i = 0; i < args.length; i++) sb.append(args[i].hashCode());
 		
-		return Integer.parseInt(raw);
+			return (int) (Double.valueOf(sb.toString().replaceAll("[^0-9]", "")).doubleValue());
+		} return 0;
 	}
 	
 	/**
