@@ -2,6 +2,20 @@ package disc.data;
 
 import disc.util.WaypointException;
 
+/**
+ * Simple data structure for storing Waypoint data, including name, x coord, y coord, z coord, heading,
+ * roll, and pitch. The String version of an instruction is as follows: <br>
+ * <br>
+ * name: x, y, z, heading, roll, pitch<br>
+ * <br>
+ * The minimum amount of data that must be specified for an instruction to be built from a string is the
+ * name, x, y, and z.<br>
+ * <br>
+ * This data structure is extensible.
+ * 
+ * @author Liam Williams
+ * @version 0.1.0
+ */
 public class Waypoint {
 
 	protected String name;
@@ -12,6 +26,12 @@ public class Waypoint {
 					 roll,
 					 pitch;
 	
+	/**
+	 * Constructs a {@link Waypoint} from a String Waypoint.
+	 * 
+	 * @param arg0 The String to construct the Waypoint from
+	 * @throws WaypointException If the data minimum is not met.
+	 */
 	public Waypoint(String arg0) throws WaypointException {
 		int o = arg0.indexOf(':');
 		if(o != -1) {
@@ -62,6 +82,9 @@ public class Waypoint {
 		} else throw new WaypointException("Invalid Waypoint: does not define name.");
 	}
 	
+	/**
+	 * Constructor for cloning a {@link Waypoint}
+	 */
 	public Waypoint(String name, double x, double y, double z, double heading, double roll, double pitch) {
 		this.name = name;
 		this.x = x;
@@ -72,6 +95,9 @@ public class Waypoint {
 		this.pitch = pitch;
 	}
 	
+	/**
+	 * Constructor for creating a {@link Waypoint} with only an x and y, with a hashCode()-generated name.
+	 */
 	public Waypoint(double x, double y) {
 		this.x = x;
 		this.y = y;
@@ -82,39 +108,70 @@ public class Waypoint {
 		this.name = Integer.toString(this.hashCode());
 	}
 
+	/**
+	 * @return the Name associated with this {@link Waypoint}
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * @return the X associated with this {@link Waypoint}
+	 */
 	public double getX() {
 		return x;
 	}
 
+	/**
+	 * @return the Y associated with this {@link Waypoint}
+	 */
 	public double getY() {
 		return y;
 	}
 
+	/**
+	 * @return the Z associated with this {@link Waypoint}
+	 */
 	public double getZ() {
 		return z;
 	}
 
+	/**
+	 * @return the Heading associated with this {@link Waypoint}
+	 */
 	public double getHeading() {
 		return heading;
 	}
 
+	/**
+	 * @return the Roll associated with this {@link Waypoint}
+	 */
 	public double getRoll() {
 		return roll;
 	}
 
+	/**
+	 * @return the Pitch associated with this {@link Waypoint}
+	 */
 	public double getPitch() {
 		return pitch;
 	}
 	
+	/**
+	 * Constructs a constructor-readable String from the Waypoint's data.
+	 * 
+	 * @return the String representation of the Waypoint's data.
+	 */
 	@Override
 	public String toString() {
 		return name + ": " + x + ", " + y + ", " + z + ", " + heading + ", " + roll + ", " + pitch;
 	}
 	
+	/**
+	 * Calculates the hashCode from the data of this Waypoint. Ignores the name.
+	 * 
+	 * @return the hashCode of the Waypoint's data.
+	 */
 	@Override
 	public int hashCode() {
 		String tmp = Integer.toString(new Double(x).hashCode())
@@ -126,6 +183,9 @@ public class Waypoint {
 		return (int) (Math.pow(Double.valueOf(tmp.replaceAll("[^0-9]", "")), .25));
 	}
 	
+	/**
+	 * @return a new Waypoint with an idential Name and other data.
+	 */
 	@Override
 	public Waypoint clone() {
 		return new Waypoint(this.name, this.x, this.y, this.z, this.heading, this.roll, this.pitch);
