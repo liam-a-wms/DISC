@@ -107,6 +107,19 @@ public class Waypoint {
 		this.pitch = 0;
 		this.name = Integer.toString(this.hashCode());
 	}
+	
+	/**
+	 * Constructor for creating a {@link Waypoint} with only an x, y, and heading, with a hashCode()-generated name.
+	 */
+	public Waypoint(double x, double y, double heading) {
+		this.x = x;
+		this.y = y;
+		this.z = 0;
+		this.heading = heading;
+		this.roll = 0;
+		this.pitch = 0;
+		this.name = Integer.toString(this.hashCode());
+	}
 
 	/**
 	 * @return the Name associated with this {@link Waypoint}
