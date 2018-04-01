@@ -4,9 +4,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import disc.data.Scenario;
 
@@ -96,6 +99,34 @@ public class ScenarioCompressor {
 	 */
 	public Scenario[] getScenarios() {
 		return scenarios.stream().toArray(Scenario[]::new);
+	}
+	
+	public Scenario getScenarioByName(String name) {
+		return Arrays.stream(this.getScenarios())
+					 .filter(s -> s.getName().equals(name))
+					 .findFirst()
+					 .orElse(null);
+	}
+	
+	public Scenario getScenarioByExactArg(String[] args) {
+		return Arrays.stream(this.getScenarios())
+					 .filter(s -> Arrays.equals(s.getArgs(), args))
+					 .findFirst()
+					 .orElse(null);		
+	}
+	
+	public Scenario getScenarioByArgContainment(String[] args) {
+		for(Scenario s : this.getScenarios()) {
+			int i = 0;
+			for(String str : s.getArgs()) {
+				if(Arrays.stream(args)
+						 .filter(string -> string.equals(str))
+						 .findFirst()
+						 .orElse(null) != null) i++;
+			}
+			if (i == args.length) return s;
+		}
+		return null;
 	}
 	
 	/**
