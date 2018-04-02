@@ -8,9 +8,6 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import disc.data.Scenario;
 
 /**
@@ -19,7 +16,7 @@ import disc.data.Scenario;
  * array or Queue data structure.
  * 
  * @author Liam Williams
- * @version 0.2.1
+ * @version 0.3.1
  */
 public class ScenarioCompressor {
 
@@ -101,6 +98,12 @@ public class ScenarioCompressor {
 		return scenarios.stream().toArray(Scenario[]::new);
 	}
 	
+	/**
+	 * Searches the array of {@link Scenario}s for the first match by name.
+	 * 
+	 * @param name The name to match with a Scenario
+	 * @return The found Scenario, or null if it wasn't found
+	 */
 	public Scenario getScenarioByName(String name) {
 		return Arrays.stream(this.getScenarios())
 					 .filter(s -> s.getName().equals(name))
@@ -108,6 +111,12 @@ public class ScenarioCompressor {
 					 .orElse(null);
 	}
 	
+	/**
+	 * Searches the array of {@link Scenario}s for the first match by exact arg array.
+	 * 
+	 * @param args The exact arg array to match with a Scenario
+	 * @return The found Scenario, or null if it wasn't found
+	 */
 	public Scenario getScenarioByExactArg(String[] args) {
 		return Arrays.stream(this.getScenarios())
 					 .filter(s -> Arrays.equals(s.getArgs(), args))
@@ -115,6 +124,12 @@ public class ScenarioCompressor {
 					 .orElse(null);		
 	}
 	
+	/**
+	 * Seaches the array of {@link Scenario}s for the first match by containment of the given args.
+	 * 
+	 * @param args The arg array to check for containment in any Scenario
+	 * @return The found Scenario, or null if it wasn't found.
+	 */
 	public Scenario getScenarioByArgContainment(String[] args) {
 		for(Scenario s : this.getScenarios()) {
 			int i = 0;
