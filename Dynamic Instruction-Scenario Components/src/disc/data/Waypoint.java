@@ -14,7 +14,7 @@ import disc.util.WaypointException;
  * This data structure is extensible.
  * 
  * @author Liam Williams
- * @version 0.1.0
+ * @version 0.1.1
  */
 public class Waypoint {
 
