@@ -14,7 +14,7 @@ import disc.util.WaypointException;
  * This data structure is extensible.
  * 
  * @author Liam Williams
- * @version 0.1.0
+ * @version 0.1.1
  */
 public class Waypoint {
 
@@ -77,8 +77,8 @@ public class Waypoint {
 				pitch = 0;
 				o = -1;
 			}
-			if(i != -1 && o != -1) pitch = Double.valueOf(arg0.substring(i));
-			else if(o != -1) pitch = Double.valueOf(o + 1);
+			if(i != -1 && o != -1) pitch = Double.valueOf(arg0.substring(o + 1, i));
+			else if(o != -1) pitch = Double.valueOf(arg0.substring(o + 1));
 		} else throw new WaypointException("Invalid Waypoint: does not define name.");
 	}
 	
