@@ -108,10 +108,10 @@ public class DISCBuilder {
 					map = new WaypointMap(sb.toString());
 					isMap = false;
 				} else {
-					scenarios.addScenario(new Scenario(sb.toString()));
+					scenarios = new ScenarioCompressor(sb.toString());
 				}
 				sb = new StringBuilder("");
-			} else if(tmp.contains("#%") && !sb.toString().isEmpty()) {
+			} else if(tmp.contains("#%") && sb.toString().isEmpty()) {
 				isMap = true;
 			} else if(tmp.isEmpty());
 			else sb.append(tmp + "\r\n");
@@ -181,7 +181,8 @@ public class DISCBuilder {
 		sb.append("#% BEGIN WAYPOINTMAP\r\n");
 		sb.append(map.toString() + "\r\n");
 		sb.append("#% BEGIN SCENARIO LIST\r\n");
-		sb.append(scenarios.toString());
+		sb.append(scenarios.toString() + "\r\n");
+		sb.append("#% END FILE");
 		return sb.toString();
 	}
 	
