@@ -15,7 +15,7 @@ import disc.data.WaypointMap;
  * Class for putting together an entire file with a WaypointMap, and chained Scenario list.
  * Works by using both the Scenario and WaypointMap parsers and writers.
  * <br><br>
- * Uses "#$" as a separator.
+ * Uses "#%" as a separator.
  * 
  * @author Liam Williams
  * @version 0.1.0
@@ -103,7 +103,7 @@ public class DISCBuilder {
 		StringBuilder sb = new StringBuilder("");
 		while(scn.hasNextLine()) {
 			String tmp = scn.nextLine().trim();
-			if(tmp.contains("#$") && !sb.toString().isEmpty()) {
+			if(tmp.contains("#%") && !sb.toString().isEmpty()) {
 				if(isMap) {
 					map = new WaypointMap(sb.toString());
 					isMap = false;
@@ -111,7 +111,7 @@ public class DISCBuilder {
 					scenarios.addScenario(new Scenario(sb.toString()));
 				}
 				sb = new StringBuilder("");
-			} else if(tmp.contains("#$") && !sb.toString().isEmpty()) {
+			} else if(tmp.contains("#%") && !sb.toString().isEmpty()) {
 				isMap = true;
 			} else if(tmp.isEmpty());
 			else sb.append(tmp + "\r\n");
@@ -178,9 +178,9 @@ public class DISCBuilder {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder("");
-		sb.append("#$ BEGIN WAYPOINTMAP\r\n");
+		sb.append("#% BEGIN WAYPOINTMAP\r\n");
 		sb.append(map.toString() + "\r\n");
-		sb.append("#$ BEGIN SCENARIO LIST\r\n");
+		sb.append("#% BEGIN SCENARIO LIST\r\n");
 		sb.append(scenarios.toString());
 		return sb.toString();
 	}
