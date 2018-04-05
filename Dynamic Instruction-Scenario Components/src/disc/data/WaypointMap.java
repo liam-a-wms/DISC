@@ -15,7 +15,7 @@ import disc.util.WaypointException;
  * whether the Waypoints contained within have heading, roll, and pitch values in radians or degrees.
  * 
  * @author Liam Williams
- * @version 0.1.0
+ * @version 0.2.0
  */
 public class WaypointMap {
 	
@@ -79,6 +79,17 @@ public class WaypointMap {
 			
 		}
 		scn.close();
+	}
+	
+	/**
+	 * Searches the internal map for a {@link Waypoint} of the given name.
+	 * 
+	 * @param name The name of the Waypoint
+	 * @return The found Waypoint, or null if it does not exist.
+	 */
+	public Waypoint get(String name) {
+		if(name != null) return m.get(name);
+		else return null;
 	}
 
 	/**
