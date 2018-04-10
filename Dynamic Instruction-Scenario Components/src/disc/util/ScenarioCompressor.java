@@ -16,7 +16,7 @@ import disc.data.Scenario;
  * Scenarios and grabbing them as a traditional array or Queue data structure.
  * 
  * @author Liam Williams
- * @version 0.3.2
+ * @version 0.3.3
  */
 public class ScenarioCompressor {
 
@@ -35,7 +35,7 @@ public class ScenarioCompressor {
      * @param input
      *            The input file to be read
      * @throws FileNotFoundException
-     *            If no such file exists
+     *             If no such file exists
      */
     public ScenarioCompressor(File input) throws FileNotFoundException {
         scenarios = new ArrayList<Scenario>(0);
@@ -66,7 +66,7 @@ public class ScenarioCompressor {
      * @param output
      *            The file to be chained into. Overwrites
      * @throws FileNotFoundException
-     *            If the file cannot be created or accessed
+     *             If the file cannot be created or accessed
      */
     public void compress(File output) throws FileNotFoundException {
         PrintWriter op = new PrintWriter(output);
@@ -75,7 +75,8 @@ public class ScenarioCompressor {
     }
 
     /**
-     * Adds the {@link Scenario} to the {@link ScenarioCompressor}'s internal array.
+     * Adds the {@link Scenario} to the {@link ScenarioCompressor}'s internal
+     * array.
      * 
      * @param toAdd
      *            the Scenario to add
@@ -92,13 +93,13 @@ public class ScenarioCompressor {
     }
 
     /**
-     * Decompresses the given file into the internal array. Will clear the internal
-     * array.
+     * Decompresses the given file into the internal array. Will clear the
+     * internal array.
      * 
      * @param input
      *            The file to be decompressed
      * @throws FileNotFoundException
-     *            If the file does not exist or cannot be accessed
+     *             If the file does not exist or cannot be accessed
      */
     public void decompress(Scanner scn) {
         this.clearScenarioList();
@@ -122,7 +123,7 @@ public class ScenarioCompressor {
      * @param input
      *            The file to be read
      * @throws FileNotFoundException
-     *            If the file does not exist or cannot be accessed
+     *             If the file does not exist or cannot be accessed
      */
     public void decompress(File input) throws FileNotFoundException {
         decompress(new Scanner(input));
@@ -154,8 +155,10 @@ public class ScenarioCompressor {
      * @return The found Scenario, or null if it wasn't found
      */
     public Scenario getScenarioByName(String name) {
-        return Arrays.stream(this.getScenarios()).filter(s -> s.getName().equals(name)).findFirst()
-                .orElse(null);
+        return Arrays.stream(this.getScenarios())
+                     .filter(s -> s.getName().equals(name))
+                     .findFirst()
+                     .orElse(null);
     }
 
     /**
@@ -167,13 +170,15 @@ public class ScenarioCompressor {
      * @return The found Scenario, or null if it wasn't found
      */
     public Scenario getScenarioByExactArg(String[] args) {
-        return Arrays.stream(this.getScenarios()).filter(s -> Arrays.equals(s.getArgs(), args))
-                .findFirst().orElse(null);
+        return Arrays.stream(this.getScenarios())
+                     .filter(s -> Arrays.equals(s.getArgs(), args))
+                     .findFirst()
+                     .orElse(null);
     }
 
     /**
-     * Seaches the array of {@link Scenario}s for the first match by containment of
-     * the given args.
+     * Seaches the array of {@link Scenario}s for the first match by containment
+     * of the given args.
      * 
      * @param args
      *            The arg array to check for containment in any Scenario
@@ -183,8 +188,10 @@ public class ScenarioCompressor {
         for(Scenario s : this.getScenarios()) {
             int i = 0;
             for(String str : s.getArgs()) {
-                if(Arrays.stream(args).filter(string -> string.equals(str)).findFirst()
-                        .orElse(null) != null)
+                if(Arrays.stream(args)
+                         .filter(string -> string.equals(str))
+                         .findFirst()
+                         .orElse(null) != null)
                     i++;
             }
             if(i == args.length) return s;
@@ -216,8 +223,8 @@ public class ScenarioCompressor {
     }
 
     /**
-     * @return The String representation of the {@link Scenario}s in this object, as
-     *         they would be seen in a file.
+     * @return The String representation of the {@link Scenario}s in this
+     *         object, as they would be seen in a file.
      */
     @Override
     public String toString() {

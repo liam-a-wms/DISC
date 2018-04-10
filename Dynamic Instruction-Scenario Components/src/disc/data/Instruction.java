@@ -23,7 +23,7 @@ import java.util.ArrayList;
  * <p>
  * 
  * @author Liam Williams
- * @version 0.3.6
+ * @version 0.3.7
  */
 public class Instruction {
 
@@ -32,8 +32,8 @@ public class Instruction {
     InstructionType t;
 
     /**
-     * Constructs the {@link Instruction} from a raw, unprocessed line of a scenario
-     * file.
+     * Constructs the {@link Instruction} from a raw, unprocessed line of a
+     * scenario file.
      * <p>
      * Does not know to ignore a comment.
      * <p>
@@ -50,7 +50,8 @@ public class Instruction {
             if(temp.equals("start") || temp.equals("stop")) {
                 t = InstructionType.DELIMITER;
                 target = "";
-                args = new String[] {temp, rawInstruction.substring(i + 1).trim()};
+                args = new String[] {temp,
+                        rawInstruction.substring(i + 1).trim()};
             } else if(temp.equals("control")) {
                 int o = 0;
                 t = InstructionType.CONTROL_STATE;
@@ -172,9 +173,9 @@ public class Instruction {
     }
 
     /**
-     * Returns a hash code for this Instruction. Calculated with the InstructionType
-     * enum ordering for the first character, then "target"'s hashCode(), then each
-     * of the args' hashCode() results.
+     * Returns a hash code for this Instruction. Calculated with the
+     * InstructionType enum ordering for the first character, then "target"'s
+     * hashCode(), then each of the args' hashCode() results.
      * <p>
      * 
      * @return a hash code value for this Instruction object
@@ -198,7 +199,8 @@ public class Instruction {
             for(int i = 0; i < args.length; i++)
                 sb.append(args[i].hashCode());
 
-            return (int) (Double.valueOf(sb.toString().replaceAll("[^0-9]", "")).doubleValue());
+            return (int) (Double.valueOf(sb.toString().replaceAll("[^0-9]", ""))
+                    .doubleValue());
         }
         return 0;
     }

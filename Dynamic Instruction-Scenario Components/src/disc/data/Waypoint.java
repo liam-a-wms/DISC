@@ -15,17 +15,12 @@ import disc.util.WaypointException;
  * This data structure is extensible.
  * 
  * @author Liam Williams
- * @version 0.1.2
+ * @version 0.1.3
  */
 public class Waypoint {
 
     protected String name;
-    protected double x, 
-                     y, 
-                     z, 
-                     heading, 
-                     roll, 
-                     pitch;
+    protected double x, y, z, heading, roll, pitch;
 
     /**
      * Constructs a {@link Waypoint} from a String Waypoint.
@@ -44,7 +39,8 @@ public class Waypoint {
                 x = Double.valueOf(arg0.substring(o + 1, i));
                 o = i;
                 i = arg0.indexOf(',', o + 1);
-            } else throw new WaypointException("Invalid Waypoint: does not define data.");
+            } else throw new WaypointException(
+                    "Invalid Waypoint: does not define data.");
             if(i != -1) {
                 y = Double.valueOf(arg0.substring(o + 1, i));
                 o = i;
@@ -81,16 +77,18 @@ public class Waypoint {
                 pitch = 0;
                 o = -1;
             }
-            if(i != -1 && o != -1) pitch = Double.valueOf(arg0.substring(o + 1, i));
+            if(i != -1 && o != -1)
+                pitch = Double.valueOf(arg0.substring(o + 1, i));
             else if(o != -1) pitch = Double.valueOf(arg0.substring(o + 1));
-        } else throw new WaypointException("Invalid Waypoint: does not define name.");
+        } else throw new WaypointException(
+                "Invalid Waypoint: does not define name.");
     }
 
     /**
      * Constructor for cloning a {@link Waypoint}
      */
-    public Waypoint(String name, double x, double y, double z, double heading, double roll,
-            double pitch) {
+    public Waypoint(String name, double x, double y, double z, double heading,
+            double roll, double pitch) {
         this.name = name;
         this.x = x;
         this.y = y;
@@ -115,8 +113,8 @@ public class Waypoint {
     }
 
     /**
-     * Constructor for creating a {@link Waypoint} with only an x, y, and heading,
-     * with a hashCode()-generated name.
+     * Constructor for creating a {@link Waypoint} with only an x, y, and
+     * heading, with a hashCode()-generated name.
      */
     public Waypoint(double x, double y, double heading) {
         this.x = x;
@@ -184,7 +182,8 @@ public class Waypoint {
      */
     @Override
     public String toString() {
-        return name + ": " + x + ", " + y + ", " + z + ", " + heading + ", " + roll + ", " + pitch;
+        return name + ": " + x + ", " + y + ", " + z + ", " + heading + ", "
+                + roll + ", " + pitch;
     }
 
     /**
@@ -200,7 +199,8 @@ public class Waypoint {
                 + Integer.toString(new Double(heading).hashCode())
                 + Integer.toString(new Double(roll).hashCode())
                 + Integer.toString(new Double(pitch).hashCode());
-        return (int) (Math.pow(Double.valueOf(tmp.replaceAll("[^0-9]", "")), .25));
+        return (int) (Math.pow(Double.valueOf(tmp.replaceAll("[^0-9]", "")),
+                .25));
     }
 
     /**
@@ -208,7 +208,8 @@ public class Waypoint {
      */
     @Override
     public Waypoint clone() {
-        return new Waypoint(this.name, this.x, this.y, this.z, this.heading, this.roll, this.pitch);
+        return new Waypoint(this.name, this.x, this.y, this.z, this.heading,
+                this.roll, this.pitch);
     }
 
 }

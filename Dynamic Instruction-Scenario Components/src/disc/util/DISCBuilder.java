@@ -19,7 +19,7 @@ import disc.data.WaypointMap;
  * Uses "#%" as a separator.
  * 
  * @author Liam Williams
- * @version 0.1.2
+ * @version 0.1.3
  */
 public class DISCBuilder {
 
@@ -55,7 +55,8 @@ public class DISCBuilder {
      */
     public DISCBuilder(WaypointMap map, Scenario[] scenarios) {
         this.map = map;
-        this.scenarios = new ScenarioCompressor(new ArrayList<Scenario>(Arrays.asList(scenarios)));
+        this.scenarios = new ScenarioCompressor(
+                new ArrayList<Scenario>(Arrays.asList(scenarios)));
     }
 
     /**
@@ -81,7 +82,8 @@ public class DISCBuilder {
         this.map = new WaypointMap();
         for(Waypoint w : map)
             this.map.addWaypoint(w);
-        this.scenarios = new ScenarioCompressor(new ArrayList<Scenario>(Arrays.asList(scenarios)));
+        this.scenarios = new ScenarioCompressor(
+                new ArrayList<Scenario>(Arrays.asList(scenarios)));
     }
 
     /**
@@ -109,8 +111,8 @@ public class DISCBuilder {
     }
 
     /**
-     * Parses the data in the given Scanner into internal data structures. Clears
-     * internal data.
+     * Parses the data in the given Scanner into internal data structures.
+     * Clears internal data.
      * 
      * @param scn
      *            A non-empty scanner created from a file or String
