@@ -27,6 +27,14 @@ public class Interpreter extends Thread {
         this.dir = dir;
     }
 
+    /**
+     * Please use this one, it's the only one I've tested.<br>
+     * Uses the fully qualified class name when referring to objects. Not fully
+     * typesafe when calling methods.
+     * 
+     * @param dir
+     * @param scenario
+     */
     public Interpreter(Directory dir, Scenario scenario) {
         this.dir = dir;
         this.work = scenario;
@@ -36,12 +44,16 @@ public class Interpreter extends Thread {
         q = work.getInstructionQueue();
     }
 
+    /**
+     * Use start() to have this method called inside its own thread, runs the
+     * interpreter.
+     */
     public void run() {
         if(work != null) init();
         else q = null;
 
         Future<?> f = null;
-        
+
         while(q.peek() != null) {
             if(f == null || f.isDone()) {
                 f = executor
@@ -76,7 +88,8 @@ class InstructionHandler implements Runnable {
         String r = "";
         for(int i = 1; i < args.length; i++) {
             if(!args[i].contains("return")) {
-                if(checkInHeap(args[i].trim())) argList.add(heap.get(args[i].trim()));
+                if(checkInHeap(args[i].trim()))
+                    argList.add(heap.get(args[i].trim()));
                 else argList.add(args[i].trim());
             } else r = parseVar(args[i]);
         }
@@ -86,19 +99,19 @@ class InstructionHandler implements Runnable {
         args = argList.toArray(new String[argList.size()]);
         Object[] objectArgs = parseArgs(args, toRun);
         try {
-            if(!r.isEmpty()) heap.put(r,
-                    toRun.invoke(toRunInstance, objectArgs).toString());
+            if(!r.isEmpty())
+                heap.put(r, toRun.invoke(toRunInstance, objectArgs).toString());
             else toRun.invoke(toRunInstance, objectArgs);
         } catch(IllegalAccessException | IllegalArgumentException
                 | InvocationTargetException e) {
             e.printStackTrace();
         }
     }
-    
+
     private Object[] parseArgs(String[] args, Method m) {
         Class<?>[] c = m.getParameterTypes();
         Object[] o = new Object[c.length];
-        
+
         for(int i = 0; i < c.length; i++) {
             if(c[i].equals(Integer.TYPE) || c[i] == int.class) {
                 o[i] = Integer.valueOf(args[i]);

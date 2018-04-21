@@ -9,6 +9,11 @@ public class Directory {
 
     Map<String, ObjectData> m = new HashMap<>();
 
+    /**
+     * Adds references to each object and its parameters.
+     * 
+     * @param objs Object references.
+     */
     public Directory(Object... objs) {
         for(int i = 0; i < objs.length; i++) {
             m.put(objs[i].getClass().getName(), new ObjectData(objs[i]));
@@ -21,6 +26,10 @@ public class Directory {
         }
     }
 
+    /**
+     * Adds a reference after initialization
+     * @param obj
+     */
     public void addObjectReference(Object obj) {
         m.put(obj.getClass().getName(), new ObjectData(obj));
     }
@@ -32,27 +41,24 @@ public class Directory {
     public Object lookupObject(String className) {
         return m.get(className).classInstance;
     }
-    
+
     public Method[] lookupObjectMethods(String className) {
         return m.get(className).methods;
     }
-    
+
     public Method lookupMethod(String className, String methodName,
             int numOfParameters) {
         if(m.get(className) == null) return null;
         Method[] ms = m.get(className).methods;
         return Arrays.stream(ms)
-                     .filter(m1 -> m1.getName().equals(methodName) 
-                             && m1.getParameterCount() == numOfParameters)
-                     .findAny()
-                     .orElse(tryDumbLookup(ms, methodName));
+                .filter(m1 -> m1.getName().equals(methodName)
+                        && m1.getParameterCount() == numOfParameters)
+                .findAny().orElse(tryDumbLookup(ms, methodName));
     }
-    
+
     private Method tryDumbLookup(Method[] ms, String methodName) {
-        return Arrays.stream(ms)
-                     .filter(m1 -> m1.getName().equals(methodName))
-                     .findAny()
-                     .orElse(null);
+        return Arrays.stream(ms).filter(m1 -> m1.getName().equals(methodName))
+                .findAny().orElse(null);
     }
 }
 
@@ -64,7 +70,8 @@ class ObjectData {
     public ObjectData(Object obj) {
         classInstance = obj;
         methods = obj.getClass().getDeclaredMethods();
-        for(Method m : methods) m.setAccessible(true);
+        for(Method m : methods)
+            m.setAccessible(true);
     }
 
 }
