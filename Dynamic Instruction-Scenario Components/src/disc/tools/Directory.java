@@ -9,7 +9,7 @@ public class Directory {
 
     Map<String, ObjectData> m = new HashMap<>();
 
-    public Directory(Object[] objs) {
+    public Directory(Object... objs) {
         for(int i = 0; i < objs.length; i++) {
             m.put(objs[i].getClass().getName(), new ObjectData(objs[i]));
         }
@@ -29,13 +29,21 @@ public class Directory {
         m.put(name, new ObjectData(obj));
     }
 
+    public Object lookupObject(String className) {
+        return m.get(className).classInstance;
+    }
+    
+    public Method[] lookupObjectMethods(String className) {
+        return m.get(className).methods;
+    }
+    
     public Method lookupMethod(String className, String methodName,
-            Class<?>[] parameterTypes) {
+            int numOfParameters) {
+        if(m.get(className) == null) return null;
         Method[] ms = m.get(className).methods;
         return Arrays.stream(ms)
                      .filter(m1 -> m1.getName().equals(methodName) 
-                             && Arrays.equals(m1.getParameterTypes(), 
-                                     parameterTypes))
+                             && m1.getParameterCount() == numOfParameters)
                      .findAny()
                      .orElse(tryDumbLookup(ms, methodName));
     }
@@ -56,6 +64,7 @@ class ObjectData {
     public ObjectData(Object obj) {
         classInstance = obj;
         methods = obj.getClass().getDeclaredMethods();
+        for(Method m : methods) m.setAccessible(true);
     }
 
 }
