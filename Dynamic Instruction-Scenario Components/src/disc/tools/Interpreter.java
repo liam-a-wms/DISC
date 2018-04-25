@@ -119,8 +119,24 @@ class InstructionHandler implements Runnable {
                 o[i] = Double.valueOf(args[i]);
             } else if(c[i].equals(Boolean.TYPE) || c[i] == boolean.class) {
                 o[i] = Boolean.valueOf(args[i]);
+            } else if(c[i].equals(Byte.TYPE) || c[i] == byte.class) {
+                o[i] = Byte.valueOf(args[i]);
+            } else if(c[i].equals(Long.TYPE) || c[i] == long.class) {
+                o[i] = Long.valueOf(args[i]);
+            } else if(c[i].equals(Character.TYPE) || c[i] == char.class) {
+                o[i] = args[i].charAt(0);
+            } else if(c[i].equals(Short.TYPE) || c[i] == short.class) {
+                o[i] = Short.valueOf(args[i]);
+            } else if(c[i].equals(Float.TYPE) || c[i] == float.class) {
+                o[i] = Float.valueOf(args[i]);
             } else {
-                o[i] = args[i];
+                try {
+                    o[i] = c[i].getDeclaredConstructor(String.class).newInstance(args[i]);
+                } catch(InstantiationException | IllegalAccessException
+                        | IllegalArgumentException | InvocationTargetException
+                        | NoSuchMethodException | SecurityException e) {
+                    o[i] = args[i];
+                }
             }
         }
         return o;
