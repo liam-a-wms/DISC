@@ -66,6 +66,7 @@ public class Interpreter extends Thread {
      * Use start() to have this method called inside its own thread; runs the
      * interpreter.
      */
+    @Override
     public void run() {
         if(work != null) init();
         else q = null;
@@ -79,7 +80,10 @@ public class Interpreter extends Thread {
             }
             try {
                 Interpreter.sleep(5);
-            } catch(InterruptedException e) {}
+            } catch(InterruptedException e) {
+                q.clear();
+                Thread.currentThread().interrupt();
+            }
         }
     }
 
@@ -122,7 +126,6 @@ class InstructionHandler implements Runnable {
 
     @Override
     public void run() {
-        String returnVarName;
         String[] args = inst.getArgs();
         ArrayList<String> argList = new ArrayList<>(args.length);
         String r = "";
@@ -163,35 +166,39 @@ class InstructionHandler implements Runnable {
         Class<?>[] c = m.getParameterTypes();
         Object[] o = new Object[c.length];
 
-        for(int i = 0; i < c.length; i++) {
-            if(c[i].equals(Integer.TYPE) || c[i] == int.class) {
-                o[i] = Integer.valueOf(args[i]);
-            } else if(c[i].equals(Double.TYPE) || c[i] == double.class) {
-                o[i] = Double.valueOf(args[i]);
-            } else if(c[i].equals(Boolean.TYPE) || c[i] == boolean.class) {
-                o[i] = Boolean.valueOf(args[i]);
-            } else if(c[i].equals(Byte.TYPE) || c[i] == byte.class) {
-                o[i] = Byte.valueOf(args[i]);
-            } else if(c[i].equals(Long.TYPE) || c[i] == long.class) {
-                o[i] = Long.valueOf(args[i]);
-            } else if(c[i].equals(Character.TYPE) || c[i] == char.class) {
-                o[i] = args[i].charAt(0);
-            } else if(c[i].equals(Short.TYPE) || c[i] == short.class) {
-                o[i] = Short.valueOf(args[i]);
-            } else if(c[i].equals(Float.TYPE) || c[i] == float.class) {
-                o[i] = Float.valueOf(args[i]);
-            } else {
-                try {
-                    o[i] = c[i].getDeclaredConstructor(String.class)
-                            .newInstance(args[i]);
-                } catch(InstantiationException | IllegalAccessException
-                        | IllegalArgumentException | InvocationTargetException
-                        | NoSuchMethodException | SecurityException e) {
-                    o[i] = args[i];
-                }
-            }
-        }
+        for(int i = 0; i < c.length; i++)
+            o[i] = parseSingleArg(args[i], c[i]);
+
         return o;
+    }
+
+    /**
+     * Helper method for parseArgs() that does the actual logic for each step of
+     * the for loop. Can handle any type.
+     * 
+     * @param arg
+     *            The arg to convert
+     * @param argType
+     *            The type to convert to
+     * @return The converted arg
+     */
+    private Object parseSingleArg(String arg, Class<?> argType) {
+        if(argType.equals(Integer.TYPE)) return Integer.valueOf(arg);
+        else if(argType.equals(Double.TYPE)) return Double.valueOf(arg);
+        else if(argType.equals(Boolean.TYPE)) return Boolean.valueOf(arg);
+        else if(argType.equals(Byte.TYPE)) return Byte.valueOf(arg);
+        else if(argType.equals(Long.TYPE)) return Long.valueOf(arg);
+        else if(argType.equals(Character.TYPE)) return arg.charAt(0);
+        else if(argType.equals(Short.TYPE)) return Short.valueOf(arg);
+        else if(argType.equals(Float.TYPE)) return Float.valueOf(arg);
+        else try {
+            return argType.getDeclaredConstructor(String.class)
+                    .newInstance(arg);
+        } catch(InstantiationException | IllegalAccessException
+                | IllegalArgumentException | InvocationTargetException
+                | NoSuchMethodException | SecurityException e) {
+            return arg;
+        }
     }
 
     /**
