@@ -17,7 +17,7 @@ import disc.util.WaypointException;
  * degrees.
  * 
  * @author Liam Williams
- * @version 0.2.1
+ * @version 0.2.2
  */
 public class WaypointMap {
 
@@ -103,8 +103,8 @@ public class WaypointMap {
 
     /**
      * Generates a set of "default" waypoints sequentially to the given decimal
-     * place. decimalPrecision values greater than 1 might take excessively long to
-     * generate.
+     * place. decimalPrecision values greater than 1 might take excessively long
+     * to generate.
      * 
      * @param xLowerBound
      *            The lower bound of X values
@@ -118,21 +118,22 @@ public class WaypointMap {
      *            The decimal place to which values are generated. 0 is whole
      *            numbers, 1 to the tens, etc
      */
-    public void generateDefaultMap(double xLowerBound, double xUpperBound, double yLowerBound,
-            double yUpperBound, int decimalPrecision) {
-        for(double y = yLowerBound; y <= yUpperBound; y += round(1 / Math.pow(10, decimalPrecision),
-                decimalPrecision + 1)) {
+    public void generateDefaultMap(double xLowerBound, double xUpperBound,
+            double yLowerBound, double yUpperBound, int decimalPrecision) {
+        for(double y = yLowerBound; y <= yUpperBound; y += round(
+                1 / Math.pow(10, decimalPrecision), decimalPrecision + 1)) {
             for(double x = xLowerBound; x <= xUpperBound; x += round(
                     1 / Math.pow(10, decimalPrecision), decimalPrecision + 1)) {
-                Waypoint t = new Waypoint(round(x, decimalPrecision), round(y, decimalPrecision));
+                Waypoint t = new Waypoint(round(x, decimalPrecision),
+                        round(y, decimalPrecision));
                 m.put(t.name, t);
             }
         }
     }
 
     /**
-     * Helper method that rounds to the given decimal place. Cleans floating-point
-     * imprecision.
+     * Helper method that rounds to the given decimal place. Cleans
+     * floating-point imprecision.
      */
     private double round(double val, int place) {
         return Math.floor((val * Math.pow(10, place))) / Math.pow(10, place);
@@ -179,6 +180,7 @@ public class WaypointMap {
      */
     @Override
     public WaypointMap clone() {
-        return new WaypointMap((HashMap<String, Waypoint>) this.m, this.inDegrees);
+        return new WaypointMap((HashMap<String, Waypoint>) this.m,
+                this.inDegrees);
     }
 }

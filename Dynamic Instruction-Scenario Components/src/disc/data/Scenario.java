@@ -31,7 +31,7 @@ import java.util.Scanner;
  * #This is a comment.
  * 
  * @author Liam Williams
- * @version 0.3.4
+ * @version 0.3.5
  */
 public class Scenario {
 
@@ -47,7 +47,7 @@ public class Scenario {
      * @param scenarioFile
      *            A File object of a Scenario file.
      * @throws FileNotFoundException
-     *            If the file doesn't actually exist.
+     *             If the file doesn't actually exist.
      */
     public Scenario(File scenarioFile) throws FileNotFoundException {
         parse(new Scanner(scenarioFile));
@@ -61,7 +61,7 @@ public class Scenario {
      * @param scenarioFile
      *            A File object of a Scenario file.
      * @throws FileNotFoundException
-     *            If the file doesn't actually exist.
+     *             If the file doesn't actually exist.
      */
     public Scenario(String scenarioFile) {
         parse(new Scanner(scenarioFile));
@@ -96,7 +96,8 @@ public class Scenario {
             if(tmp.startsWith("##")) {
                 if(tmp.startsWith("##name=")) scenarioName = tmp.substring(7);
                 else toArgs.add(tmp.substring(tmp.indexOf('=') + 1));
-            } else if(!((tmp.startsWith("#") || tmp.startsWith("# ")) || tmp.isEmpty()))
+            } else if(!((tmp.startsWith("#") || tmp.startsWith("# "))
+                    || tmp.isEmpty()))
                 toInstructions.add(new Instruction(tmp));
         }
         scn.close();
@@ -138,8 +139,8 @@ public class Scenario {
     }
 
     /**
-     * @return a String that fully represents the scenario, as would be found in a
-     *         Scenario file.
+     * @return a String that fully represents the scenario, as would be found in
+     *         a Scenario file.
      */
     @Override
     public String toString() {
@@ -155,8 +156,9 @@ public class Scenario {
     }
 
     /**
-     * Calculates a hash code using the hashCode() methods of the "scenarioName",
-     * "args", and each of the {@link Instruction}s stored in the {@link Scenario}.
+     * Calculates a hash code using the hashCode() methods of the
+     * "scenarioName", "args", and each of the {@link Instruction}s stored in
+     * the {@link Scenario}.
      * 
      * @return A unique hash code for this Scenario object
      */
