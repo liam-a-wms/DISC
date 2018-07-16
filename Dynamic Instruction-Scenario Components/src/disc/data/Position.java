@@ -16,7 +16,7 @@ import disc.util.WaypointException;
  * This data structure is extensible.
  * 
  * @author Liam Williams
- * @version 0.1.0
+ * @version 0.2.0
  */
 public class Position extends Waypoint {
 
@@ -190,7 +190,7 @@ public class Position extends Waypoint {
     }
     
     /**
-     * Comparison to check for an exact match between this {@link Position} and a {@link Waypoint}
+     * Comparison to check for an exact match between this {@link Position} and a {@link Waypoint}.
      * 
      * @param w the Waypoint to compare against
      * @return true if the Waypoint matches
@@ -198,6 +198,88 @@ public class Position extends Waypoint {
     public boolean compareToWaypoint(Waypoint w) {
         //Compares with a tolerance of 0.0000001 just incase of a floating point error
         return compareToWaypoint(w, 1e-7);
+    }
+    
+    /**
+     * Rudimentary comparison to compare this {@link Position} to a {@link Waypoint},
+     * only checking x, y, and z.
+     * 
+     * @param w the Waypoint to compare against
+     * @param tolerance the tolerance for "how close" it can be
+     * @return true if the values are within a tolerable difference
+     */
+    public boolean compareOrthogonal(Waypoint w, double tolerance) {
+        double[] a = new double[3];
+        double[] b = new double[3];
+        boolean[] c = new boolean[3];
+        
+        a[0] = this.x;
+        a[1] = this.y;
+        a[2] = this.z;
+        
+        b[0] = w.getX();
+        b[1] = w.getY();
+        b[2] = w.getZ();
+        
+        for(int i = 0; i < 3; i++) {
+            if(a[i] == b[i]) c[i] = true;
+            else c[i] = (Math.abs(a[i] - b[i]) <= tolerance);
+        }
+        
+        return (c[0] && c[1] && c[2]);
+    }
+    
+    /**
+     * Comparison to check for an exact match between this {@link Position} and a {@link Waypoint},
+     * only checking x, y, and z.
+     * 
+     * @param w the Waypoint to compare against
+     * @return true if the Waypoint matches
+     */
+    public boolean compareOrthogonal(Waypoint w) {
+        //Compares with a tolerance of 0.0000001 just incase of a floating point error
+        return compareOrthogonal(w, 1e-7);
+    }
+    
+    /**
+     * Rudimentary comparison to compare this {@link Position} to a {@link Waypoint},
+     * only checking heading, pitch, and roll.
+     * 
+     * @param w the Waypoint to compare against
+     * @param tolerance the tolerance for "how close" it can be
+     * @return true if the values are within a tolerable difference
+     */
+    public boolean compareRotation(Waypoint w, double tolerance) {
+        double[] a = new double[3];
+        double[] b = new double[3];
+        boolean[] c = new boolean[3];
+        
+        a[0] = this.heading;
+        a[1] = this.roll;
+        a[2] = this.pitch;
+        
+        b[0] = w.getHeading();
+        b[1] = w.getRoll();
+        b[2] = w.getPitch();
+        
+        for(int i = 0; i < 3; i++) {
+            if(a[i] == b[i]) c[i] = true;
+            else c[i] = (Math.abs(a[i] - b[i]) <= tolerance);
+        }
+        
+        return (c[0] && c[1] && c[2]);
+    }
+    
+    /**
+     * Comparison to check for an exact match between this {@link Position} and a {@link Waypoint},
+     * only checking heading, roll, and pitch.
+     * 
+     * @param w the Waypoint to compare against
+     * @return true if the Waypoint matches
+     */
+    public boolean compareRotation(Waypoint w) {
+        //Compares with a tolerance of 0.0000001 just incase of a floating point error
+        return compareRotation(w, 1e-7);
     }
 
 }
