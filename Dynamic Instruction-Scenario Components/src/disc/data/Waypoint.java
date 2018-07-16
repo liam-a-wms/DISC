@@ -15,12 +15,17 @@ import disc.util.WaypointException;
  * This data structure is extensible.
  * 
  * @author Liam Williams
- * @version 0.1.3
+ * @version 0.1.4
  */
 public class Waypoint {
 
     protected String name;
-    protected double x, y, z, heading, roll, pitch;
+    protected double x;
+    protected double y;
+    protected double z;
+    protected double heading;
+    protected double roll;
+    protected double pitch;
 
     /**
      * Constructs a {@link Waypoint} from a String Waypoint.
