@@ -16,7 +16,7 @@ import disc.util.WaypointException;
  * This data structure is extensible.
  * 
  * @author Liam Williams
- * @version 0.2.0
+ * @version 0.2.1
  */
 public class Position extends Waypoint {
 
@@ -59,6 +59,7 @@ public class Position extends Waypoint {
     /**
      * @return the Name associated with this {@link Position}
      */
+    @Override
     public String getName() {
         return name;
     }
@@ -73,6 +74,7 @@ public class Position extends Waypoint {
     /**
      * @return the X associated with this {@link Position}
      */
+    @Override
     public double getX() {
         return x;
     }
@@ -87,6 +89,7 @@ public class Position extends Waypoint {
     /**
      * @return the Y associated with this {@link Position}
      */
+    @Override
     public double getY() {
         return y;
     }
@@ -101,6 +104,7 @@ public class Position extends Waypoint {
     /**
      * @return the Z associated with this {@link Position}
      */
+    @Override
     public double getZ() {
         return z;
     }
@@ -115,6 +119,7 @@ public class Position extends Waypoint {
     /**
      * @return the Heading associated with this {@link Position}
      */
+    @Override
     public double getHeading() {
         return heading;
     }
@@ -129,6 +134,7 @@ public class Position extends Waypoint {
     /**
      * @return the Roll associated with this {@link Position}
      */
+    @Override
     public double getRoll() {
         return roll;
     }
@@ -143,6 +149,7 @@ public class Position extends Waypoint {
     /**
      * @return the Pitch associated with this {@link Position}
      */
+    @Override
     public double getPitch() {
         return pitch;
     }
@@ -162,31 +169,8 @@ public class Position extends Waypoint {
      * @return true if the values are within a tolerable difference
      */
     public boolean compareToWaypoint(Waypoint w, double tolerance) {
-        double[] a = new double[6];
-        double[] b = new double[6];
-        boolean[] c = new boolean[6];
-        
-        a[0] = this.x;
-        a[1] = this.y;
-        a[2] = this.z;
-        a[3] = this.heading;
-        a[4] = this.roll;
-        a[5] = this.pitch;
-        
-        b[0] = w.x;
-        b[1] = w.y;
-        b[2] = w.z;
-        b[3] = w.heading;
-        b[4] = w.roll;
-        b[5] = w.pitch;
-        
-        for(int i = 0; i < 6; i++) {
-            //If both are at 0 (the default for both classes), say true
-            if(a[i] == 0 || b[i] == 0) c[i] = true;
-            else c[i] = (Math.abs(a[i] - b[i]) <= tolerance);
-        }
-        
-        return (c[0] && c[1] && c[2] && c[3] && c[4] && c[5]);
+        return (compareOrthogonal(w, tolerance)
+                && compareRotation(w, tolerance));
     }
     
     /**
@@ -209,24 +193,9 @@ public class Position extends Waypoint {
      * @return true if the values are within a tolerable difference
      */
     public boolean compareOrthogonal(Waypoint w, double tolerance) {
-        double[] a = new double[3];
-        double[] b = new double[3];
-        boolean[] c = new boolean[3];
-        
-        a[0] = this.x;
-        a[1] = this.y;
-        a[2] = this.z;
-        
-        b[0] = w.getX();
-        b[1] = w.getY();
-        b[2] = w.getZ();
-        
-        for(int i = 0; i < 3; i++) {
-            if(a[i] == b[i]) c[i] = true;
-            else c[i] = (Math.abs(a[i] - b[i]) <= tolerance);
-        }
-        
-        return (c[0] && c[1] && c[2]);
+        return (((this.x == w.x) || (Math.abs(this.x - w.x) <= tolerance))
+                && ((this.y == w.y) || (Math.abs(this.y - w.y) <= tolerance))
+                && ((this.z == w.z) || (Math.abs(this.z - w.z) <= tolerance)));
     }
     
     /**
@@ -250,24 +219,12 @@ public class Position extends Waypoint {
      * @return true if the values are within a tolerable difference
      */
     public boolean compareRotation(Waypoint w, double tolerance) {
-        double[] a = new double[3];
-        double[] b = new double[3];
-        boolean[] c = new boolean[3];
-        
-        a[0] = this.heading;
-        a[1] = this.roll;
-        a[2] = this.pitch;
-        
-        b[0] = w.getHeading();
-        b[1] = w.getRoll();
-        b[2] = w.getPitch();
-        
-        for(int i = 0; i < 3; i++) {
-            if(a[i] == b[i]) c[i] = true;
-            else c[i] = (Math.abs(a[i] - b[i]) <= tolerance);
-        }
-        
-        return (c[0] && c[1] && c[2]);
+        return (((this.heading == w.heading)
+                || (Math.abs(this.heading - w.heading) <= tolerance))
+                && ((this.pitch == w.pitch)
+                        || (Math.abs(this.pitch - w.pitch) <= tolerance))
+                && ((this.roll == w.roll)
+                        || (Math.abs(this.roll - w.roll) <= tolerance)));
     }
     
     /**
