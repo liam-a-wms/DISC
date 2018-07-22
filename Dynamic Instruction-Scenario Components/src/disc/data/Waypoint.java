@@ -9,13 +9,13 @@ import disc.util.WaypointException;
  * <br>
  * name: x, y, z, heading, roll, pitch<br>
  * <br>
- * The minimum amount of data that must be specified for a Waypoint to be
- * built from a string is the name, x, y, and z.<br>
+ * The minimum amount of data that must be specified for a Waypoint to be built
+ * from a string is the name, x and y.<br>
  * <br>
  * This data structure is extensible.
  * 
  * @author Liam Williams
- * @version 0.1.5
+ * @version 0.1.6
  */
 public class Waypoint {
 
