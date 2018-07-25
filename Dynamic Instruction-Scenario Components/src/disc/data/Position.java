@@ -219,9 +219,12 @@ public class Position extends Waypoint {
      * @return true if the values are within a tolerable difference
      */
     public boolean compareOrthogonal(Waypoint w, double tolerance) {
-        return (((this.x == w.x) || (Math.abs(this.x - w.x) <= tolerance))
-                && ((this.y == w.y) || (Math.abs(this.y - w.y) <= tolerance))
-                && ((this.z == w.z) || (Math.abs(this.z - w.z) <= tolerance)));
+        return (((this.x - w.x <= tolerance) 
+        		        || (this.x - w.x >= -tolerance))
+                && ((this.y - w.y <= tolerance) 
+                		|| (this.y - w.y >= -tolerance))
+                && ((this.z - w.z <= tolerance) 
+                		|| (this.z - w.z >= -tolerance)));
     }
 
     /**
@@ -249,12 +252,12 @@ public class Position extends Waypoint {
      * @return true if the values are within a tolerable difference
      */
     public boolean compareRotation(Waypoint w, double tolerance) {
-        return (((this.heading == w.heading)
-                || (Math.abs(this.heading - w.heading) <= tolerance))
-                && ((this.pitch == w.pitch)
-                        || (Math.abs(this.pitch - w.pitch) <= tolerance))
-                && ((this.roll == w.roll)
-                        || (Math.abs(this.roll - w.roll) <= tolerance)));
+    	 return (((this.heading - w.heading <= tolerance) 
+ 		                || (this.heading - w.heading >= -tolerance))
+                 && ((this.pitch - w.pitch <= tolerance) 
+         		        || (this.pitch - w.pitch >= -tolerance))
+                 && ((this.roll - w.roll <= tolerance) 
+         		        || (this.roll - w.roll >= -tolerance)));
     }
 
     /**
