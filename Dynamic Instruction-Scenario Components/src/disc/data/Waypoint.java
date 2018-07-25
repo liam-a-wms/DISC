@@ -15,7 +15,7 @@ import disc.util.WaypointException;
  * This data structure is extensible.
  * 
  * @author Liam Williams
- * @version 0.1.6
+ * @version 0.1.7
  */
 public class Waypoint {
 
@@ -53,7 +53,11 @@ public class Waypoint {
             } else throw new WaypointException(
                     "Invalid Waypoint: does not define the minimum amount of data.");
             if(i != -1) {
-                z = Double.valueOf(arg0.substring(o + 1, i));
+                try {
+                    z = Double.valueOf(arg0.substring(o + 1, i));
+                } catch(NullPointerException e) { //Just in case. Shouldn't happen though.
+                    z = 0;
+                }
                 o = i;
                 i = arg0.indexOf(',', o + 1);
             } else {

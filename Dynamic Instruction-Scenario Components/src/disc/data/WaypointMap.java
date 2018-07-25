@@ -106,6 +106,8 @@ public class WaypointMap {
      * place. decimalPrecision values greater than 1 might take excessively long
      * to generate.
      * 
+     * Don't use this. It's a performance killer.
+     * 
      * @param xLowerBound
      *            The lower bound of X values
      * @param xUpperBound
@@ -118,6 +120,7 @@ public class WaypointMap {
      *            The decimal place to which values are generated. 0 is whole
      *            numbers, 1 to the tens, etc
      */
+    @Deprecated
     public void generateDefaultMap(double xLowerBound, double xUpperBound,
             double yLowerBound, double yUpperBound, int decimalPrecision) {
         for(double y = yLowerBound; y <= yUpperBound; y += round(
@@ -147,6 +150,16 @@ public class WaypointMap {
      */
     public void addWaypoint(Waypoint toAdd) {
         m.put(toAdd.getName(), toAdd);
+    }
+
+    /**
+     * Removes the {@link Waypoint} associated with the key.
+     * 
+     * @param waypointName
+     *            The key to remove a Waypoint from
+     */
+    public void removeWaypoint(String waypointName) {
+        m.remove(waypointName);
     }
 
     /**
