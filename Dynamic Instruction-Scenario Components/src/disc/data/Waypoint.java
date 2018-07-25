@@ -9,18 +9,23 @@ import disc.util.WaypointException;
  * <br>
  * name: x, y, z, heading, roll, pitch<br>
  * <br>
- * The minimum amount of data that must be specified for an instruction to be
- * built from a string is the name, x, y, and z.<br>
+ * The minimum amount of data that must be specified for a Waypoint to be built
+ * from a string is the name, x and y.<br>
  * <br>
  * This data structure is extensible.
  * 
  * @author Liam Williams
- * @version 0.1.3
+ * @version 0.1.7
  */
 public class Waypoint {
 
     protected String name;
-    protected double x, y, z, heading, roll, pitch;
+    protected double x;
+    protected double y;
+    protected double z;
+    protected double heading;
+    protected double roll;
+    protected double pitch;
 
     /**
      * Constructs a {@link Waypoint} from a String Waypoint.
@@ -48,7 +53,11 @@ public class Waypoint {
             } else throw new WaypointException(
                     "Invalid Waypoint: does not define the minimum amount of data.");
             if(i != -1) {
-                z = Double.valueOf(arg0.substring(o + 1, i));
+                try {
+                    z = Double.valueOf(arg0.substring(o + 1, i));
+                } catch(NullPointerException e) { //Just in case. Shouldn't happen though.
+                    z = 0;
+                }
                 o = i;
                 i = arg0.indexOf(',', o + 1);
             } else {
