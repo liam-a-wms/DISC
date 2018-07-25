@@ -220,11 +220,11 @@ public class Position extends Waypoint {
      */
     public boolean compareOrthogonal(Waypoint w, double tolerance) {
         return (((this.x - w.x <= tolerance) 
-        		        || (this.x - w.x >= -tolerance))
+        		        || (this.x - w.x > -tolerance))
                 && ((this.y - w.y <= tolerance) 
-                		|| (this.y - w.y >= -tolerance))
+                		|| (this.y - w.y > -tolerance))
                 && ((this.z - w.z <= tolerance) 
-                		|| (this.z - w.z >= -tolerance)));
+                		|| (this.z - w.z > -tolerance)));
     }
 
     /**
@@ -253,11 +253,11 @@ public class Position extends Waypoint {
      */
     public boolean compareRotation(Waypoint w, double tolerance) {
     	 return (((this.heading - w.heading <= tolerance) 
- 		                || (this.heading - w.heading >= -tolerance))
+ 		                || (this.heading - w.heading > -tolerance))
                  && ((this.pitch - w.pitch <= tolerance) 
-         		        || (this.pitch - w.pitch >= -tolerance))
+         		        || (this.pitch - w.pitch > -tolerance))
                  && ((this.roll - w.roll <= tolerance) 
-         		        || (this.roll - w.roll >= -tolerance)));
+         		        || (this.roll - w.roll > -tolerance)));
     }
 
     /**
